@@ -28,15 +28,22 @@ EOF
 #   None
 #######################################
 system_git_clone() {
+  # print_banner
+  # printf "${WHITE} 💻 Fazendo download do código Equipechat...${GRAY_LIGHT}"
+  # printf "\n\n"
+
+
+  # sleep 2
+
+  # sudo su - deploy <<EOF
+  # git clone ${link_git} /home/deploy/${instancia_add}/
+
   print_banner
-  printf "${WHITE} 💻 Fazendo download do código Equipechat...${GRAY_LIGHT}"
-  printf "\n\n"
-
-
+  printf "${WHITE} 💻 Fazendo download do código Equipechat...${GRAY_LIGHT}\n\n"
   sleep 2
 
-  sudo su - deploy <<EOF
-  git clone ${link_git} /home/deploy/${instancia_add}/
+  echo "🔐 Digite o usuário e o token quando solicitado:"
+  sudo -u deploy bash -c "git clone ${link_git} /home/deploy/${instancia_add}/"
 EOF
 
   sleep 2
