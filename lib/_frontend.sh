@@ -16,7 +16,10 @@ frontend_node_dependencies() {
 
   sudo su - deploy <<EOF
   cd /home/deploy/${instancia_add}/frontend
-  npm install --force
+  npm install --legacy-peer-deps || {
+    echo "❌ Erro ao instalar dependências do frontend";
+    exit 1;
+  }
 EOF
 
   sleep 2
@@ -36,7 +39,7 @@ frontend_node_build() {
 
   sudo su - deploy <<EOF
   cd /home/deploy/${instancia_add}/frontend
-  npm run build
+  npm run build || { echo "❌ Build do frontend falhou"; exit 1; }
 EOF
 
   sleep 2
@@ -90,7 +93,7 @@ frontend_set_env() {
 sudo su - deploy << EOF
   cat <<[-]EOF > /home/deploy/${instancia_add}/frontend/.env
 REACT_APP_BACKEND_URL=${backend_url}
-REACT_APP_HOURS_CLOSE_TICKETS_AUTO = 24
+REACT_APP_HOURS_CLOSE_TICKETS_AUTO=24
 [-]EOF
 EOF
 
